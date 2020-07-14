@@ -44,12 +44,19 @@ include('functiongenero.php');
                         <input type="hidden" name="codigo">
                         Descripción <input name="descripcion" type="text" class="form-control" />
                         Detalle <input name="detalle" type="text" class="form-control" />
-                            <h5>Fotografía</h5>
-                            <img src="" width='400' id="fotografia">
-            
-                        <div class="file-loading">
-
-                            <input id="input-b6" name="foto" type="file" class="form-control-file">
+                                      <br>
+                        <div class="form-group row">
+                           Fotografía
+                           <div class="col-sm-1"></div>
+                            <div class="btn btn-default btn-file col-9">
+                                <i class="fas fa-paperclip"></i> Subir
+                                <input type='file' id="imgInp" name="foto" onchange="readImage(this);">
+                            </div>
+                         
+                            <div class="col-sm-12">
+                                <br>
+                                <img id="blah"name="fotografia" src="https://via.placeholder.com/150" alt="Tu imagen" class="img-bordered" width="50%">
+                            </div>
                         </div>
                     </div>
             </div>

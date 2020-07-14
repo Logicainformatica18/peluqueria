@@ -59,7 +59,7 @@ class genero extends connection
                       $generoid = $row[0];
                       echo "<td>" . $row[0] . "</td>";
                       echo "<td>" . $row[1] . "</td>";
-                  
+
                       // decodificar base 64
                       $foto = base64_encode($row[2]);
                       if ($foto == "") {
@@ -99,7 +99,7 @@ class genero extends connection
     }
     $this->generoSelect();
   }
-  public function generoInsert($descripcion, $foto,$detalle)
+  public function generoInsert($descripcion, $foto, $detalle)
   {
     //registra los datos del genero
     $sql = "INSERT INTO genero (descripcion,foto,detalle) VALUES ('$descripcion','$foto','$detalle')";
@@ -128,7 +128,7 @@ class genero extends connection
       </script>";
     $this->generoSelect();
   }
-  public function generoUpdate($codigo, $descripcion, $foto,$detalle)
+  public function generoUpdate($codigo, $descripcion, $foto, $detalle)
   {
     //si no hay ninguna foto eso quiere decir que no actualizaremos el campo foto
     // ya que si lo dejamos, la anterior foto lo eliminara si el valor es nulo
@@ -139,15 +139,16 @@ class genero extends connection
     }
     if (mysqli_query($this->open(), $sql)) {
       echo "<script> alert('Modificado Correctamente') </script>";
+      echo "<script>	
+      genero.codigo.value='$codigo';
+      genero.descripcion.value='$descripcion';
+      genero.detalle.value='$detalle';
+      document.getElementById('fotografia').src= document.getElementById('foto_subida').src
+     </script>";
     } else {
       echo "<script> alert('Error al modificar')";
     }
-    echo "<script>	
-    genero.codigo.value='$codigo';
-    genero.descripcion.value='$descripcion';
-    genero.detalle.value='$detalle';
-  	document.getElementById('fotografia').src= document.getElementById('foto_subida').src
-   </script>";
+
     $this->generoSelect();
   }
 
@@ -155,31 +156,40 @@ class genero extends connection
   public function generoSelect2()
   {
     $sql = mysqli_query($this->open(), "SELECT * from genero;");
+
     echo "<div class='row'>";
     while ($row = mysqli_fetch_array($sql)) {
-      $descripcion=$row[1];
-      $detalle=$row[3];
+      $descripcion = $row[1];
+      $detalle = $row[3];
       // decodificar base 64
       $foto = base64_encode($row[2]);
 
-     
-      echo "<div class='col-mb-6 col-lg-3 col-sm-12 '> 
-              <div class='card'><a href='#seccion'>";
-              echo "<p></p><h5 class='card-title'>$descripcion</h5>
-              <p class='card-text text-black'>$detalle.</p>";
+      echo "
+      <div class='card text-black col-lg-4 col-md-6 '><p></p> ";
+?>
+ 
+      <a href='#'onclick="elegirGenero('<?php echo $descripcion?>');">
+      <?php
+ echo "     <h5 class='card-title'>$descripcion</h5>";
+      
       if ($foto == "") {
         echo "No disponible";
       } else {
-        echo "<img src='data:image/jpeg;base64,$foto'class='card-img-top border'>";
-            }
-           echo "
-    </div>
-    </div></a>
-   ";
+        echo "<img src='data:image/jpeg;base64,$foto'class='card-img-top' height='230'>";
+      }
+    echo "<div class='card'>
+       
+        <p class='card-text text-black'>$detalle.</p>
+      </div>
+      </a>
+      </div>
+     
+      ";
     }
   ?>
 
-</div>
+    </div>
+
 <?php
 
   }
@@ -189,9 +199,9 @@ $genero = new genero();
 if ($metodo == "delete") {
   $genero->generoDelete($codigo);
 } elseif ($metodo == "insert") {
-  $genero->generoInsert($descripcion, $foto,$detalle);
+  $genero->generoInsert($descripcion, $foto, $detalle);
 } elseif ($metodo == "select") {
   $genero->generoSelectOne($codigo);
 } elseif ($metodo == "update") {
-  $genero->generoUpdate($codigo, $descripcion, $foto,$detalle);
+  $genero->generoUpdate($codigo, $descripcion, $foto, $detalle);
 }

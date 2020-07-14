@@ -29,15 +29,11 @@ if ($foto != "") {
 
 class catalogo extends connection
 {
-
-
-  public function catalogoSelect()
-  {
-
-    $sql = mysqli_query($this->open(), "SELECT ca.cod_catalogo,ca.descripcion,ca.precio,ca.foto, g.descripcion as genero,s.descripcion as servicio,c.descripcion as categoria,ca.detalle
+    public function catalogoSelect()
+    {
+        $sql = mysqli_query($this->open(), "SELECT ca.cod_catalogo,ca.descripcion,ca.precio,ca.foto, g.descripcion as genero,s.descripcion as servicio,c.descripcion as categoria,ca.detalle
     from catalogo ca inner join genero g inner join categoria c inner join servicio s on ca.cod_genero = g.cod_genero and
-    ca.cod_servicio=s.cod_servicio and ca.cod_categoria=c.cod_categoria;");
-?>
+    ca.cod_servicio=s.cod_servicio and ca.cod_categoria=c.cod_categoria order by ca.cod_catalogo desc;"); ?>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -69,24 +65,22 @@ class catalogo extends connection
                   <tbody>
                     <?php
                     while ($row = mysqli_fetch_array($sql)) {
-                      echo "<tr>";
-                      $catalogoid = $row[0];
-                      echo "<td>" . $row[0] . "</td>";
-                      echo "<td>" . $row[1] . "</td>";
-                      echo "<td>" . $row[2] . "</td>";
-                       // decodificar base 64
-                       $foto = base64_encode($row[3]);
-                       if ($foto == "") {
-                         echo "<td height='50'>No Disponible</td>";
-                       } else {
-                         echo "<td height='50'><img src='data:image/jpeg;base64,$foto' width='50'height='50'></td>";
-                       }
-                      echo "<td>" . $row[4] . "</td>";
-                      echo "<td>" . $row[5] . "</td>";
-                      echo "<td>" . $row[6] . "</td>";
-                      echo "<td>" .substr($row[7],0,20) . "...</td>";
-                    
-                    ?>
+                        echo "<tr>";
+                        $catalogoid = $row[0];
+                        echo "<td>" . $row[0] . "</td>";
+                        echo "<td>" . $row[1] . "</td>";
+                        echo "<td>" . $row[2] . "</td>";
+                        // decodificar base 64
+                        $foto = base64_encode($row[3]);
+                        if ($foto == "") {
+                            echo "<td height='50'>No Disponible</td>";
+                        } else {
+                            echo "<td height='50'><img src='data:image/jpeg;base64,$foto' width='50'height='50'></td>";
+                        }
+                        echo "<td>" . $row[4] . "</td>";
+                        echo "<td>" . $row[5] . "</td>";
+                        echo "<td>" . $row[6] . "</td>";
+                        echo "<td>" .substr($row[7], 0, 20) . "...</td>"; ?>
                       <!-- Button trigger modal -->
                       <td><button type="button" class="btn btn-primary note-icon-pencil" data-toggle="modal" data-target="#exampleModal" onclick="catalogoSelectOne('<?php echo $catalogoid ?>'); catalogoEditar();  return false"></button>
                       </td>
@@ -94,8 +88,7 @@ class catalogo extends connection
                       <td><button class="btn btn-danger note-icon-trash" onclick="catalogoDelete('<?php echo $catalogoid ?>');  return false"></button></td>
                     <?php
                       echo "</tr>";
-                    }
-                    ?>
+                    } ?>
                   </tbody>
                 </table>
               </div>
@@ -108,47 +101,47 @@ class catalogo extends connection
 
 
   <?php
-  }
-  public function catalogoDelete($codigo)
-  {
-    //registra los datos del empleados
-    $sql = "DELETE FROM catalogo where cod_catalogo='$codigo';";
-    if (mysqli_query($this->open(), $sql)) {
-    } else {
     }
-    $this->catalogoSelect();
-  }
-  public function catalogoInsert($genero,$servicio,$categoria,$descripcion,$detalle,$foto,$precio)
-  {
-    //registra los datos del catalogo
-    $sql = "INSERT INTO catalogo (cod_genero,cod_servicio,cod_categoria,descripcion,detalle,foto,precio)
+    public function catalogoDelete($codigo)
+    {
+        //registra los datos del empleados
+        $sql = "DELETE FROM catalogo where cod_catalogo='$codigo';";
+        if (mysqli_query($this->open(), $sql)) {
+        } else {
+        }
+        $this->catalogoSelect();
+    }
+    public function catalogoInsert($genero, $servicio, $categoria, $descripcion, $detalle, $foto, $precio)
+    {
+        //registra los datos del catalogo
+        $sql = "INSERT INTO catalogo (cod_genero,cod_servicio,cod_categoria,descripcion,detalle,foto,precio)
      VALUES ('$genero','$servicio','$categoria','$descripcion','$detalle','$foto','$precio')";
 
-    if (mysqli_query($this->open(), $sql)) {
-      echo "<script> alert('Registrado Correctamente') </script>";
-    } else {
-      echo "<script> alert('Error de Registro')";
-    }
+        if (mysqli_query($this->open(), $sql)) {
+            echo "<script> alert('Registrado Correctamente') </script>";
+        } else {
+            echo "<script> alert('Error de Registro')";
+        }
 
-    $this->catalogoSelect();
-  }
-  public function catalogoSelectOne($codigo)
-  {
-    $sql = mysqli_query($this->open(), "SELECT ca.cod_catalogo,ca.descripcion,ca.precio,ca.foto, g.cod_genero as genero,s.cod_servicio as servicio,c.cod_categoria as categoria,ca.detalle
+        $this->catalogoSelect();
+    }
+    public function catalogoSelectOne($codigo)
+    {
+        $sql = mysqli_query($this->open(), "SELECT ca.cod_catalogo,ca.descripcion,ca.precio,ca.foto, g.cod_genero as genero,s.cod_servicio as servicio,c.cod_categoria as categoria,ca.detalle
     from catalogo ca inner join genero g inner join categoria c inner join servicio s on ca.cod_genero = g.cod_genero and
     ca.cod_servicio=s.cod_servicio and ca.cod_categoria=c.cod_categoria where cod_catalogo ='$codigo'");
-    $r = mysqli_fetch_assoc($sql);
-    $codigo = $r["cod_catalogo"];
-    $descripcion = $r["descripcion"];
-    $precio = $r["precio"];
-    $foto = base64_encode($r["foto"]);
-    $genero = $r["genero"];
-    $servicio = $r["servicio"];
-    $categoria = $r["categoria"];
-    $descripcion = $r["descripcion"];
+        $r = mysqli_fetch_assoc($sql);
+        $codigo = $r["cod_catalogo"];
+        $descripcion = $r["descripcion"];
+        $precio = $r["precio"];
+        $foto = base64_encode($r["foto"]);
+        $genero = $r["genero"];
+        $servicio = $r["servicio"];
+        $categoria = $r["categoria"];
+        $descripcion = $r["descripcion"];
     
-    $detalle = $r["detalle"];
-    echo "<script>
+        $detalle = $r["detalle"];
+        echo "<script>
       catalogo.codigo.value='$codigo';
       catalogo.descripcion.value='$descripcion';
       catalogo.precio.value='$precio';
@@ -158,25 +151,22 @@ class catalogo extends connection
       catalogo.categoria.value='$categoria';
       catalogo.detalle.value='$detalle';
       </script>";
-    $this->catalogoSelect();
-  }
-  public function catalogoUpdate($codigo,$genero,$servicio,$categoria,$descripcion,$detalle,$foto,$precio)
-  {
-    if ($foto == "") {
-      $sql = "UPDATE catalogo set cod_genero='$genero',cod_servicio='$servicio',cod_categoria='$categoria'
+        $this->catalogoSelect();
+    }
+    public function catalogoUpdate($codigo, $genero, $servicio, $categoria, $descripcion, $detalle, $foto, $precio)
+    {
+        if ($foto == "") {
+            $sql = "UPDATE catalogo set cod_genero='$genero',cod_servicio='$servicio',cod_categoria='$categoria'
       ,descripcion='$descripcion',detalle='$detalle',precio='$precio' where cod_catalogo='$codigo'";
-    } else {
-      $sql = "UPDATE catalogo set cod_genero='$genero',cod_servicio='$servicio',cod_categoria='$categoria'
+        } else {
+            $sql = "UPDATE catalogo set cod_genero='$genero',cod_servicio='$servicio',cod_categoria='$categoria'
        ,descripcion='$descripcion',detalle='$detalle',foto='$foto',precio='$precio' where cod_catalogo='$codigo'";
-    }
+        }
  
  
-    if (mysqli_query($this->open(), $sql)) {
-      echo "<script> alert('Modificado Correctamente') </script>";
-    } else {
-      echo "<script> alert('Error al modificar')";
-    }
-    echo "<script>
+        if (mysqli_query($this->open(), $sql)) {
+            echo "<script> alert('Modificado Correctamente') </script>";
+            echo "<script>
       catalogo.codigo.value='$codigo';
       catalogo.descripcion.value='$descripcion';
       catalogo.precio.value='$precio';
@@ -186,11 +176,45 @@ class catalogo extends connection
       catalogo.categoria.value='$categoria';
       catalogo.detalle.value='$detalle';
       </script>";
+        } else {
+            echo "<script> alert('Error al modificar')";
+        }
+   
       
-    $this->catalogoSelect();
-  }
-}
+        $this->catalogoSelect();
+    }
+    public function catalogoSelectPublico($genero)
+    {
+        $sql = mysqli_query($this->open(), "SELECT c.descripcion,c.detalle,c.foto FROM catalogo c inner join genero g 
+        on c.cod_genero=g.cod_genero where g.descripcion like '$genero';");
+        echo "<div class='row'>";
+        while ($row = mysqli_fetch_array($sql)) {
+            $descripcion=$row[0];
+            $detalle=$row[1];
+            // decodificar base 64
+            $foto = base64_encode($row[2]);
 
+     
+            echo "<div class='col-mb-6 col-lg-3 col-sm-12'> 
+              <div class='card'><a href='#seccion'>";
+            echo "<p></p><h5 class='card-title'>$descripcion</h5>
+              <p class='card-text text-black'>$detalle.</p>";
+            if ($foto == "") {
+                echo "No disponible";
+            } else {
+                echo "<img src='data:image/jpeg;base64,$foto'class='card-img-top border' height='200px'>";
+            }
+            echo "
+    </div>
+    </div></a>
+   ";
+        }
+        ?>
+
+        </div>
+        <?php
+    }
+}
 $catalogo = new catalogo();
 if ($metodo == "delete") {
   $catalogo->catalogoDelete($codigo);

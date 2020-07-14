@@ -11,7 +11,6 @@ include "head.php";
 <div style='overflow: hidden;  max-width: 100%;' id='color'>
 
 
-
 <script>
                  var color = document.getElementById("color");
                

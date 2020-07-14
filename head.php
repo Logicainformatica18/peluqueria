@@ -77,7 +77,12 @@ include "conexion.php";
                     while ($row = mysqli_fetch_array($sql)) {
                         $cod_genero = $row[0];
                         $descripcion = $row[1];
-                        echo "<a class='text-white dropdown-item display-4' href='index.php#$descripcion' aria-expanded='false'>$descripcion</a>";
+                        ?>
+ 
+                        <a class='text-white dropdown-item display-4' href='#'onclick="elegirGenero('<?php echo $descripcion?>');"aria-expanded='false'>
+                        <?php echo $descripcion?></a>
+                        <?php
+                       
                     }
                     echo " </div>";
                     echo "</li>";
@@ -109,9 +114,7 @@ include "conexion.php";
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link link text-white display-4" href="catalogo.php">&nbsp;ATENCION</a>
-                    </li>
+          
                     <li class="nav-item">
                         <a class="nav-link link text-white display-4" href="blog.php">&nbsp;BLOG</a>
                     </li>

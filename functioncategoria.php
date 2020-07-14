@@ -117,14 +117,15 @@ class categoria extends connection
  
     if (mysqli_query($this->open(), $sql)) {
       echo "<script> alert('Modificado Correctamente') </script>";
-    } else {
-      echo "<script> alert('Error al modificar')";
-    }
-    echo "<script>	
+      echo "<script>	
     categoria.codigo.value='$codigo';
     categoria.descripcion.value='$descripcion';
     categoria.detalle.value='$detalle';
    </script>";
+    } else {
+      echo "<script> alert('Error al modificar')";
+    }
+    
     $this->categoriaSelect();
   }
 }

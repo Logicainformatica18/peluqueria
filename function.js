@@ -802,3 +802,23 @@ function readImage(input) {
       reader.readAsDataURL(input.files[0]);
     }
   }
+
+
+
+  function tabla_filtro(){
+    $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+    });
+    $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+    });
+
+  }
+

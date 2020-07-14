@@ -103,6 +103,11 @@
 <script src="assets/theme/js/script.js"></script>
 <script src="assets/slidervideo/script.js"></script>
 
+<script>
+      function elegirGenero(a) {
+    window.location.href = "index.php?genero=" + a +"#catalogo_detalle";
 
+}
+</script>
 </body>
 </html>

@@ -62,20 +62,6 @@
 
 
 
-<!-- SCRIPTS DE SUBIR FOTO-->
-<script src="foto/jquery.min.js"></script>
-<script src="foto/fileinput.js" type="text/javascript"></script>
-<script>
-    $(document).on('ready', function() {
-        $("#input-b6").fileinput({
-            showUpload: false,
-            dropZoneEnabled: false,
-            maxFileCount: 10,
-            mainClass: "input-group-lg"
-        });
-    });
-</script>
-
 
 
 <!-- DataTables -->
